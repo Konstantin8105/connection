@@ -13,31 +13,16 @@ import (
 
 func Example() {
 	bp := baseplate.BasePlate{
-		B: bolt.New(bolt.D24, bolt.G4p6),
-		BPos: []geometry.XY{
-			geometry.XY{X: +0.160, Y: +0.160},
-			geometry.XY{X: -0.160, Y: +0.160},
-			geometry.XY{X: +0.160, Y: -0.160},
-			geometry.XY{X: -0.160, Y: -0.160},
-		},
+		B:    bolt.New(bolt.D24, bolt.G4p6),
+		BPos: geometry.NewPlate(0.320, 0.320),
 
-		PlatePos: []geometry.XY{
-			geometry.XY{X: +0.170, Y: +0.170},
-			geometry.XY{X: -0.170, Y: +0.170},
-			geometry.XY{X: +0.170, Y: -0.170},
-			geometry.XY{X: -0.170, Y: -0.170},
-		},
+		PlatePos: geometry.NewPlate(0.340, 0.340),
 		PlateThk: 0.030,
 
-		SectionPos: []XY{}, // TODO: section.Generate("HEB200"),
+		SectionPos:  []geometry.XY{}, // TODO: section.Generate("HEB200"),
 		SectionProp: eu3.S235EN10025_2,
 
-		ColumnPos: []geometry.XY{
-			geometry.XY{X: +1.600, Y: +1.600},
-			geometry.XY{X: -1.600, Y: +1.600},
-			geometry.XY{X: +1.600, Y: -1.600},
-			geometry.XY{X: -1.600, Y: -1.600},
-		},
+		ColumnPos:  geometry.NewPlate(1.600, 1.600),
 		ColumnProp: eu2.GradeC12_15,
 	}
 
