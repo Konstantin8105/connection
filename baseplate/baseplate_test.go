@@ -19,7 +19,7 @@ func Example() {
 		PlatePos: geometry.NewPlate(0.340, 0.340),
 		PlateThk: 0.030,
 
-		SectionPos:  []geometry.XY{}, // TODO: section.Generate("HEB200"),
+		SectionPos:  geometry.NewISection("HEB200"),
 		SectionProp: eu3.S235EN10025_2,
 
 		ColumnPos:  geometry.NewPlate(1.600, 1.600),
