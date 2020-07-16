@@ -5,46 +5,14 @@
 
 void ANUREV(double DiameterOfBolt, double& A, double& M, double& L, bool OUT = true)
 {
-    if (DiameterOfBolt == 0.010) {
-        A = 0.034;
-        M = 0.017;
-        L = 0.052;
-    }
-    else if (DiameterOfBolt == 0.012) {
-        A = 0.036;
-        M = 0.019;
-        L = 0.060;
-    }
-    else if (DiameterOfBolt == 0.016) {
-        A = 0.048;
-        M = 0.025;
-        L = 0.078;
-    }
-    else if (DiameterOfBolt == 0.020) {
-        A = 0.058;
-        M = 0.030;
-        L = 0.098;
-    }
-    else if (DiameterOfBolt == 0.024) {
-        A = 0.068;
-        M = 0.036;
-        L = 0.110;
-    }
-    else if (DiameterOfBolt == 0.030) {
-        A = 0.090;
-        M = 0.045;
-        L = 0.140;
-    }
-    else if (DiameterOfBolt == 0.036) {
-        A = 0.105;
-        M = 0.052;
-        L = 0.160;
-    }
-    else if (DiameterOfBolt == 0.048) {
-        A = 0.140;
-        M = 0.070;
-        L = 0.210;
-    }
+    if      (DiameterOfBolt == 0.010) { A = 0.034; M = 0.017; L = 0.052; }
+    else if (DiameterOfBolt == 0.012) { A = 0.036; M = 0.019; L = 0.060; }
+    else if (DiameterOfBolt == 0.016) { A = 0.048; M = 0.025; L = 0.078; }
+    else if (DiameterOfBolt == 0.020) { A = 0.058; M = 0.030; L = 0.098; }
+    else if (DiameterOfBolt == 0.024) { A = 0.068; M = 0.036; L = 0.110; }
+    else if (DiameterOfBolt == 0.030) { A = 0.090; M = 0.045; L = 0.140; }
+    else if (DiameterOfBolt == 0.036) { A = 0.105; M = 0.052; L = 0.160; }
+    else if (DiameterOfBolt == 0.048) { A = 0.140; M = 0.070; L = 0.210; }
     else {
         print_name("Please add information about this bolts from Anuriev");
         FATAL();

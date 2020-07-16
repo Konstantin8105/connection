@@ -176,162 +176,6 @@ HOLE_TYPE EN1090_2_TABLE_11 (double DiameterBolts, double DiameterOfHole)
 }
 
 ///
-/// FUNCTIONS FOR BOLTS
-///
-
-enum BOLT_CLASS{g3_6,g5_6,g8_8,g10_9,
-                g_Ct3,g_09G2S,g_10G2S1// For foundation only
-               };
-
-void Printf(BOLT_CLASS BS)
-{
-    switch(BS)
-    {
-        case g3_6:
-            printf("Bolt grade 3.6\n");
-            break;
-        case g5_6:
-            printf("Bolt grade 5.6\n");
-            break;
-        case g8_8:
-            printf("Bolt grade 8.8\n");
-            break;
-        case g10_9:
-            printf("Bolt grade 10.9\n");
-            break;
-        case g_Ct3:
-            printf("Bolt BCt3\n");
-            break;
-        case g_09G2S:
-            printf("Bolt 09G2S\n");
-            break;
-        case g_10G2S1:
-            printf("Bolt 10G2S1\n");
-            break;
-        default:
-            print_name("Bolt grade is wrong");
-            FATAL();
-    }
-}
-
-void BOLT_STRESS(BOLT_CLASS BS, double &Pyb, double &Pub, STANDART STD, bool OUT)
-{
-    if(STD == STANDART_SNiP)
-        {
-            print_name("Error in BOLT_STRESS - STANDART_SNiP");
-            FATAL();
-        }
-    else
-    {
-        switch(BS)
-        {
-            case g3_6    : Pyb = 180e6; Pub = 300e6; break;
-            case g5_6    : Pyb = 300e6; Pub = 500e6; break;
-            case g8_8    : Pyb = 640e6; Pub = 800e6; break;
-            case g10_9   : Pyb = 900e6; Pub =1000e6; break;
-            case g_Ct3   : Pyb = 145e6; Pub = 145e6; break;
-            case g_09G2S : Pyb = 185e6; Pub = 185e6; break;
-            case g_10G2S1: Pyb = 190e6; Pub = 190e6; break;
-            default:
-                print_name("STRESS: Bolt grade is wrong");
-                FATAL();
-        }
-        if(OUT)
-        {
-            printf("From table 3.1 EN1993-1-8\n");
-            printf("Pyb = %.1fMPa\n",Pyb*1e-6);
-            printf("Pub = %.1fMPa\n",Pub*1e-6);
-        }
-    }
-}
-
-void BOLT_STRESS(BOLT_CLASS BS, double &Pyb, double &Pub)
-{BOLT_STRESS( BS, Pyb, Pub, STANDART_Eurocode, false);}
-
-double BOLT_PITCH(double DiameterBolt)
-{
-    double Pitch = 1e20;
-         if (fabs(DiameterBolt - 0.003) < 1e-6) Pitch = 0.50e-3;
-    else if (fabs(DiameterBolt - 0.004) < 1e-6) Pitch = 0.70e-3;
-    else if (fabs(DiameterBolt - 0.005) < 1e-6) Pitch = 0.80e-3;
-    else if (fabs(DiameterBolt - 0.006) < 1e-6) Pitch = 1.00e-3;
-    else if (fabs(DiameterBolt - 0.008) < 1e-6) Pitch = 1.25e-3;
-    else if (fabs(DiameterBolt - 0.010) < 1e-6) Pitch = 1.50e-3;
-    else if (fabs(DiameterBolt - 0.012) < 1e-6) Pitch = 1.75e-3;
-    else if (fabs(DiameterBolt - 0.014) < 1e-6) Pitch = 2.00e-3;
-    else if (fabs(DiameterBolt - 0.016) < 1e-6) Pitch = 2.00e-3;
-    else if (fabs(DiameterBolt - 0.018) < 1e-6) Pitch = 2.50e-3;
-    else if (fabs(DiameterBolt - 0.020) < 1e-6) Pitch = 2.50e-3;
-    else if (fabs(DiameterBolt - 0.022) < 1e-6) Pitch = 2.50e-3;
-    else if (fabs(DiameterBolt - 0.024) < 1e-6) Pitch = 3.00e-3;
-    else if (fabs(DiameterBolt - 0.027) < 1e-6) Pitch = 3.00e-3;
-    else if (fabs(DiameterBolt - 0.030) < 1e-6) Pitch = 3.50e-3;
-    else if (fabs(DiameterBolt - 0.036) < 1e-6) Pitch = 4.00e-3;
-    else if (fabs(DiameterBolt - 0.042) < 1e-6) Pitch = 4.50e-3;
-    else if (fabs(DiameterBolt - 0.048) < 1e-6) Pitch = 5.00e-3;
-    else if (fabs(DiameterBolt - 0.056) < 1e-6) Pitch = 5.50e-3;
-    else if (fabs(DiameterBolt - 0.064) < 1e-6) Pitch = 6.00e-3;
-    else
-    {
-        print_name("Value p is not correct\n");
-        printf("Diameter = %.1fmm\n",DiameterBolt*1e3);
-        FATAL();
-    }
-    return Pitch;
-}
-
-double BOLT_Dm(double DiameterBolt)
-{
-    double Diameter_m = 0;
-         if (fabs(DiameterBolt - 0.003) < 1e-6) Diameter_m = 5.5e-3;
-    else if (fabs(DiameterBolt - 0.004) < 1e-6) Diameter_m = 7.0e-3;
-    else if (fabs(DiameterBolt - 0.005) < 1e-6) Diameter_m = 8.0e-3;
-    else if (fabs(DiameterBolt - 0.006) < 1e-6) Diameter_m = 10.e-3;
-    else if (fabs(DiameterBolt - 0.008) < 1e-6) Diameter_m = 13.e-3;
-    else if (fabs(DiameterBolt - 0.010) < 1e-6) Diameter_m = 17.e-3;
-    else if (fabs(DiameterBolt - 0.012) < 1e-6) Diameter_m = 19.e-3;
-    else if (fabs(DiameterBolt - 0.014) < 1e-6) Diameter_m = 22.e-3;
-    else if (fabs(DiameterBolt - 0.016) < 1e-6) Diameter_m = 24.e-3;
-    else if (fabs(DiameterBolt - 0.018) < 1e-6) Diameter_m = 27.e-3;
-    else if (fabs(DiameterBolt - 0.020) < 1e-6) Diameter_m = 30.e-3;
-    else if (fabs(DiameterBolt - 0.022) < 1e-6) Diameter_m = 32.e-3;
-    else if (fabs(DiameterBolt - 0.024) < 1e-6) Diameter_m = 36.e-3;
-    else if (fabs(DiameterBolt - 0.027) < 1e-6) Diameter_m = 41.e-3;
-    else if (fabs(DiameterBolt - 0.030) < 1e-6) Diameter_m = 46.e-3;
-    else if (fabs(DiameterBolt - 0.036) < 1e-6) Diameter_m = 55.e-3;
-    else if (fabs(DiameterBolt - 0.042) < 1e-6) Diameter_m = 65.e-3;
-    else if (fabs(DiameterBolt - 0.048) < 1e-6) Diameter_m = 75.e-3;
-    else if (fabs(DiameterBolt - 0.056) < 1e-6) Diameter_m = 85.e-3;
-    else if (fabs(DiameterBolt - 0.064) < 1e-6) Diameter_m = 95.e-3;
-    else
-    {
-        Diameter_m = 1e30;
-        print_name("Value d_m is not correct\n");
-        FATAL();
-    }
-    return Diameter_m;
-}
-
-void BOLT_AREA_As(double &As, double DiameterBolt, bool OUT=false)
-{
-    double Pitch = BOLT_PITCH(DiameterBolt);
-    As = CONST_M_PI/4.* pow(DiameterBolt-0.935229*Pitch,2.);
-    if(OUT)
-    {
-        printf("As = %.1fmm2\n",As*1e6);
-    }
-}
-
-//void BOLT_AREA_As(double &As, double DiameterBolt)
-//{    BOLT_AREA_As(As, DiameterBolt, false);}
-
-void BOLT_AREA_A(double &A, double DiameterBolt, bool OUT=false)
-{
-    //A = CONST_M_PI/4.* pow(DiameterBolt,2.);
-    BOLT_AREA_As( A, DiameterBolt, OUT);
-}
-
-///
 /// TENSION RESISTANCE FOR INDIVIDUAL BOLT
 ///
 
@@ -405,57 +249,57 @@ void EN1993_1_8_TABLE_3_4_BpRd(double &BpRd, double DiameterBolt, double tp, dou
 ///
 /// MATERIAL OF STEEL
 ///
-//
-//enum STEEL {C235,C245,C275} ;
-//
-//void STEEL_STRESS( STEEL Steel, double thk, double &Py, double &Pu, STANDART STD, bool OUT)
-//{
-//    if(STD == STANDART_SNiP)
-//    {
-//        switch(Steel)
-//        {
-//            case C235:
-//                if(2e-3 <= thk && thk <=20e-3)
-//                { Py = 230e6; Pu = 350e6; }
-//                else if(20e-3 <= thk && thk <=40e-3)
-//                { Py = 220e6; Pu = 350e6; }
-//                else if(40e-3 <= thk && thk <=100e-3)
-//                { Py = 210e6; Pu = 350e6; }
-//                else if(100e-3 <= thk)
-//                { Py = 190e6; Pu = 350e6; }
-//                else
-//                {
-//                    print_name("You can`t use C235");
-//                    FATAL();
-//                }
-//                break;
-//            default:
-//                print_name("ERROR: STEEL_STRESS");
-//                FATAL();
-//        }
-//    }
-//    else if(STD == STANDART_SNiP)
-//    {
-//        switch(Steel)
-//        {
-//            case C235:
-//                if(thk <=40e-3)
-//                { Py = 235e6; Pu = 360e6; }
-//                else
-//                { Py = 215e6; Pu = 340e6; }
-//            default:
-//                print_name("ERROR: STEEL_STRESS");
-//                FATAL();
-//        }
-//    }
-//    else
-//        FATAL();
-//    if(OUT)
-//    {
-//        printf("Py = %5.1 MPa\n",Py*1e-6);
-//        printf("Pu = %5.1 MPa\n",Pu*1e-6);
-//    }
-//}
+
+enum STEEL {C235,C245,C275} ;
+
+void STEEL_STRESS( STEEL Steel, double thk, double &Py, double &Pu, STANDART STD, bool OUT)
+{
+    if(STD == STANDART_SNiP)
+    {
+        switch(Steel)
+        {
+            case C235:
+                if(2e-3 <= thk && thk <=20e-3)
+                { Py = 230e6; Pu = 350e6; }
+                else if(20e-3 <= thk && thk <=40e-3)
+                { Py = 220e6; Pu = 350e6; }
+                else if(40e-3 <= thk && thk <=100e-3)
+                { Py = 210e6; Pu = 350e6; }
+                else if(100e-3 <= thk)
+                { Py = 190e6; Pu = 350e6; }
+                else
+                {
+                    print_name("You can`t use C235");
+                    FATAL();
+                }
+                break;
+            default:
+                print_name("ERROR: STEEL_STRESS");
+                FATAL();
+        }
+    }
+    else if(STD == STANDART_SNiP)
+    {
+        switch(Steel)
+        {
+            case C235:
+                if(thk <=40e-3)
+                { Py = 235e6; Pu = 360e6; }
+                else
+                { Py = 215e6; Pu = 340e6; }
+            default:
+                print_name("ERROR: STEEL_STRESS");
+                FATAL();
+        }
+    }
+    else
+        FATAL();
+    if(OUT)
+    {
+        printf("Py = %5.1 MPa\n",Py*1e-6);
+        printf("Pu = %5.1 MPa\n",Pu*1e-6);
+    }
+}
 
 ///
 /// BOLT CONNECTION: COEFFICIENT FROM PICTURE 6.1
