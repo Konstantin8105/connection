@@ -7,28 +7,11 @@ import (
 
 var DEBUG int = 1
 
-type CODE_NORM = int
-
-const (
-	Code_SNiP     CODE_NORM = 0
-	Code_Eurocode           = 1
-)
-
-var CODE CODE_NORM
-
-type STANDART = int
-
-const (
-	STANDART_SNiP     STANDART = 0
-	STANDART_Eurocode          = 1
-)
-
 type STEEL = int
 
 const (
 	C235 STEEL = 0
 )
-
 
 func Printf_CALC(a float64, b float64, g int) {
 }
@@ -52,107 +35,43 @@ func Betta_W_table4_1(Category string) float64 {
 }
 
 func SNiP(Category string, thk float64, PY float64, PU float64) {
-	if uint(int((CODE))) == uint(int((Code_SNiP))) {
-		if Strcmp(Category, ("C235\x00")) == 0 {
-			if 0.002 <= thk && thk <= 0.02 {
-				//(Category == "C235")
-				PY = 2.3e+08
-				PU = 3.5e+08
-			} else if 0.02 <= thk && thk <= 0.04 {
-				PY = 2.2e+08
-				PU = 3.5e+08
-			} else if 0.04 <= thk && thk <= 0.1 {
-				PY = 2.1e+08
-				PU = 3.5e+08
-			} else if 0.1 <= thk {
-				PY = 1.9e+08
-				PU = 3.5e+08
-			} else {
-				fmt.Printf(("You can`t use C235\x00"))
-				fmt.Printf(("Category = %s\n\x00"), Category)
-				fmt.Printf(("thk = %f\n\x00"), thk)
-				panic("ddd")
-			}
-		}
-		if Strcmp(Category, ("C245\x00")) == 0 {
-			if 0.002 <= thk && thk <= 0.02 {
-				//(Category == "C245")
-				PY = 2.4e+08
-				PU = 3.6e+08
-			} else {
-				fmt.Printf(("You can`t use C245\x00"))
-				panic("ddd")
-			}
-		}
-	} else if uint(int((CODE))) == uint(int((Code_Eurocode))) {
-		if Strcmp(Category, ("C235\x00")) == 0 {
-			if thk <= 0.04 {
-				//(Category == "C235")
-				PY = 2.35e+08
-				PU = 3.6e+08
-			} else {
-				PY = 2.15e+08
-				PU = 3.4e+08
-			}
-		} else if Strcmp(Category, ("C275\x00")) == 0 {
-			if thk <= 0.04 {
-				//(Category == "C275")
-				PY = 2.75e+08
-				PU = 4.3e+08
-			} else {
-				PY = 2.55e+08
-				PU = 4.1e+08
-			}
+	if Strcmp(Category, ("C235\x00")) == 0 {
+		if thk <= 0.04 {
+			//(Category == "C235")
+			PY = 2.35e+08
+			PU = 3.6e+08
 		} else {
-			fmt.Printf(("You can`t use this with Eurocode\x00"))
-			panic("ddd")
+			PY = 2.15e+08
+			PU = 3.4e+08
+		}
+	} else if Strcmp(Category, ("C275\x00")) == 0 {
+		if thk <= 0.04 {
+			//(Category == "C275")
+			PY = 2.75e+08
+			PU = 4.3e+08
+		} else {
+			PY = 2.55e+08
+			PU = 4.1e+08
 		}
 	} else {
-		fmt.Printf(("You can`t use this: What is this code\x00"))
+		fmt.Printf(("You can`t use this with Eurocode\x00"))
 		panic("ddd")
 	}
 }
 
-func STEEL_STRESS(Steels STEEL, thk float64, Py float64, Pu float64, STD STANDART, OUT int) {
-	if uint(int((STD))) == uint(int((STANDART_SNiP))) {
-		switch uint(int((Steels))) {
-		case uint(int((C235))):
-			if 0.002 <= thk && thk <= 0.02 {
-				Py = 2.3e+08
-				Pu = 3.5e+08
-			} else if 0.02 <= thk && thk <= 0.04 {
-				Py = 2.2e+08
-				Pu = 3.5e+08
-			} else if 0.04 <= thk && thk <= 0.1 {
-				Py = 2.1e+08
-				Pu = 3.5e+08
-			} else if 0.1 <= thk {
-				Py = 1.9e+08
-				Pu = 3.5e+08
-			} else {
-				fmt.Printf(("You can`t use C235\x00"))
-				panic("ddd")
-			}
-		default:
-			fmt.Printf(("ERROR: enum STEEL_STRESS\x00"))
-			panic("ddd")
+func STEEL_STRESS(Steels STEEL, thk float64, Py float64, Pu float64, OUT int) {
+	switch uint(int((Steels))) {
+	case uint(int((C235))):
+		if thk <= 0.04 {
+			Py = 2.35e+08
+			Pu = 3.6e+08
+		} else {
+			Py = 2.15e+08
+			Pu = 3.4e+08
 		}
-	} else if uint(int((STD))) == uint(int((STANDART_SNiP))) {
-		switch uint(int((Steels))) {
-		case uint(int((C235))):
-			if thk <= 0.04 {
-				Py = 2.35e+08
-				Pu = 3.6e+08
-			} else {
-				Py = 2.15e+08
-				Pu = 3.4e+08
-			}
-			fallthrough
-		default:
-			fmt.Printf(("ERROR: enum STEEL_STRESS\x00"))
-			panic("ddd")
-		}
-	} else {
+		fallthrough
+	default:
+		fmt.Printf(("ERROR: enum STEEL_STRESS\x00"))
 		panic("ddd")
 	}
 	if OUT != 0 {
@@ -161,7 +80,6 @@ func STEEL_STRESS(Steels STEEL, thk float64, Py float64, Pu float64, STD STANDAR
 	}
 }
 
-// Picture_6_1_APLHA - transpiled function from  GOPATH/src/github.com/Konstantin8105/connection/eu3/eu8.c:322
 func Picture_6_1_APLHA(lambda1 float64, lambda2 float64, OUT int) float64 {
 	if DEBUG != 0 {
 		///
