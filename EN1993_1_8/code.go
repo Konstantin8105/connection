@@ -1,4 +1,4 @@
-package eu3
+package en1993_1_8
 
 import (
 	"fmt"
@@ -7,17 +7,6 @@ import (
 
 var DEBUG int = 1
 
-type STEEL = int
-
-const (
-	C235 STEEL = 0
-)
-
-type Steel string
-
-const (
-	S235EN10025_2 Steel = "S235 EN10025-2"
-)
 
 func Printf_CALC(a float64, b float64, g int) {
 }

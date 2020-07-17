@@ -38,7 +38,7 @@ func (bp BasePlate) Check() error {
 	return nil
 }
 
-func (bp BasePlate) Calculate(out io.Writer, forces load.Load) (err error) {
+func (bp BasePlate) Calculate(out io.Writer, N, V, M float64) (err error) {
 	if err = bp.Check(); err != nil {
 		return
 	}

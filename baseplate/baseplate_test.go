@@ -5,10 +5,7 @@ import (
 
 	bolt "github.com/Konstantin8105/Eurocode3.Bolt"
 	"github.com/Konstantin8105/connection/baseplate"
-	"github.com/Konstantin8105/connection/eu2"
-	"github.com/Konstantin8105/connection/eu3"
 	"github.com/Konstantin8105/connection/geometry"
-	"github.com/Konstantin8105/connection/load"
 )
 
 func Example() {
@@ -26,6 +23,6 @@ func Example() {
 		ColumnProp: eu2.GradeC12_15,
 	}
 
-	bp.Calculate(os.Stdout, load.Load{N: -1000.0e3, V: 0.0, M: 100.0e3})
+	bp.Calculate(os.Stdout, -1000.0e3, 0.0, 100.0e3)
 	// Output:
 }
